@@ -1,0 +1,1083 @@
+[
+{
+  "model": "menu.category",
+  "pk": 1,
+  "fields": {
+    "name": "Breakfast",
+    "description": "",
+    "image": "menu/idli-sambar.png",
+    "is_active": true
+  }
+},
+{
+  "model": "menu.category",
+  "pk": 2,
+  "fields": {
+    "name": "Lunch",
+    "description": "",
+    "image": "menu/thali.png",
+    "is_active": true
+  }
+},
+{
+  "model": "menu.category",
+  "pk": 3,
+  "fields": {
+    "name": "Snacks",
+    "description": "",
+    "image": "menu/samosa.png",
+    "is_active": true
+  }
+},
+{
+  "model": "menu.category",
+  "pk": 4,
+  "fields": {
+    "name": "Beverages",
+    "description": "",
+    "image": "menu/cold-coffee.png",
+    "is_active": true
+  }
+},
+{
+  "model": "menu.category",
+  "pk": 5,
+  "fields": {
+    "name": "Desserts",
+    "description": "",
+    "image": "menu/gulab-jamun.png",
+    "is_active": true
+  }
+},
+{
+  "model": "menu.category",
+  "pk": 6,
+  "fields": {
+    "name": "Non-Veg",
+    "description": "",
+    "image": "menu/chicken-biryani.png",
+    "is_active": true
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "name": "Masala Dosa",
+    "description": "Crispy dosa with potato filling",
+    "price": "50.00",
+    "image": "menu/Gemini_Generated_Image_um1vn2um1vn2um1v.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:15:42.030Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "name": "Idli Sambar",
+    "description": "Soft idlis with sambar",
+    "price": "30.00",
+    "image": "menu/Gemini_Generated_Image_f5tkwkf5tkwkf5tk.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:15:42.033Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 3,
+  "fields": {
+    "category": 2,
+    "name": "Veg Biryani",
+    "description": "Aromatic vegetable biryani",
+    "price": "80.00",
+    "image": "menu/Gemini_Generated_Image_tyu6iqtyu6iqtyu6.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:15:42.035Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 4,
+  "fields": {
+    "category": 2,
+    "name": "Chicken Biryani",
+    "description": "Flavorful chicken biryani",
+    "price": "120.00",
+    "image": "menu/Gemini_Generated_Image_x8hej7x8hej7x8he.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:15:42.038Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 5,
+  "fields": {
+    "category": 3,
+    "name": "Samosa",
+    "description": "Crispy fried samosa",
+    "price": "15.00",
+    "image": "menu/Gemini_Generated_Image_9rgng69rgng69rgn.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:15:42.041Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 6,
+  "fields": {
+    "category": 3,
+    "name": "Vada Pav",
+    "description": "Mumbai style vada pav",
+    "price": "20.00",
+    "image": "menu/Gemini_Generated_Image_g0elug0elug0elug.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:15:42.044Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 7,
+  "fields": {
+    "category": 4,
+    "name": "Tea",
+    "description": "Hot masala chai",
+    "price": "10.00",
+    "image": "menu/Gemini_Generated_Image_92oeek92oeek92oe.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:15:42.046Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 8,
+  "fields": {
+    "category": 4,
+    "name": "Coffee",
+    "description": "Fresh filter coffee",
+    "price": "15.00",
+    "image": "menu/Gemini_Generated_Image_8qvnm98qvnm98qvn.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:15:42.049Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 9,
+  "fields": {
+    "category": 4,
+    "name": "Cold Coffee",
+    "description": "Chilled coffee with ice cream",
+    "price": "40.00",
+    "image": "menu/Gemini_Generated_Image_mso8bnmso8bnmso8.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:15:42.052Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 10,
+  "fields": {
+    "category": 5,
+    "name": "Gulab Jamun",
+    "description": "Sweet gulab jamun",
+    "price": "25.00",
+    "image": "menu/Gemini_Generated_Image_b8ym4ob8ym4ob8ym.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:15:42.056Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 11,
+  "fields": {
+    "category": 2,
+    "name": "Mutton Biryani",
+    "description": "Flavorful mutton biryani",
+    "price": "150.00",
+    "image": "menu/Gemini_Generated_Image_79k6vu79k6vu79k6.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.624Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 12,
+  "fields": {
+    "category": 2,
+    "name": "Egg Biryani",
+    "description": "Egg biryani with boiled eggs",
+    "price": "80.00",
+    "image": "menu/Gemini_Generated_Image_ifo9k7ifo9k7ifo9.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.626Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 13,
+  "fields": {
+    "category": 2,
+    "name": "Chicken Fried Rice",
+    "description": "Chinese style chicken fried rice",
+    "price": "90.00",
+    "image": "menu/Gemini_Generated_Image_gse1avgse1avgse1.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.629Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 14,
+  "fields": {
+    "category": 2,
+    "name": "Chicken Curry",
+    "description": "Spicy chicken curry",
+    "price": "100.00",
+    "image": "menu/Gemini_Generated_Image_yy6hokyy6hokyy6h.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.632Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 15,
+  "fields": {
+    "category": 6,
+    "name": "Fish Fry",
+    "description": "Crispy fried fish",
+    "price": "80.00",
+    "image": "menu/Gemini_Generated_Image_j0h1dfj0h1dfj0h1.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.635Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 16,
+  "fields": {
+    "category": 2,
+    "name": "Egg Curry",
+    "description": "Boiled eggs in spicy gravy",
+    "price": "60.00",
+    "image": "menu/Gemini_Generated_Image_4zflg74zflg74zfl.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.638Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 17,
+  "fields": {
+    "category": 3,
+    "name": "Chicken Roll",
+    "description": "Chicken kathi roll",
+    "price": "50.00",
+    "image": "menu/Gemini_Generated_Image_vciladvciladvcil.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.640Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 18,
+  "fields": {
+    "category": 3,
+    "name": "Egg Roll",
+    "description": "Egg kathi roll",
+    "price": "35.00",
+    "image": "menu/Gemini_Generated_Image_98svvh98svvh98sv.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.642Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 19,
+  "fields": {
+    "category": 3,
+    "name": "Chicken Momos",
+    "description": "Steamed chicken momos with chutney",
+    "price": "60.00",
+    "image": "menu/Gemini_Generated_Image_vdiv1nvdiv1nvdiv.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.645Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 20,
+  "fields": {
+    "category": 3,
+    "name": "Chicken Sandwich",
+    "description": "Grilled chicken sandwich",
+    "price": "45.00",
+    "image": "menu/Gemini_Generated_Image_kfapy2kfapy2kfap.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.647Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 21,
+  "fields": {
+    "category": 3,
+    "name": "Omelette",
+    "description": "Masala omelette",
+    "price": "25.00",
+    "image": "menu/Gemini_Generated_Image_mshbdfmshbdfmshb.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:27:39.649Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 22,
+  "fields": {
+    "category": 1,
+    "name": "Poori Bhaji",
+    "description": "Fluffy pooris with spicy potato bhaji",
+    "price": "40.00",
+    "image": "menu/Gemini_Generated_Image_n018drn018drn018.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.041Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 23,
+  "fields": {
+    "category": 1,
+    "name": "Upma",
+    "description": "South Indian semolina breakfast",
+    "price": "30.00",
+    "image": "menu/Gemini_Generated_Image_5zwfm85zwfm85zwf.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.044Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 24,
+  "fields": {
+    "category": 1,
+    "name": "Aloo Paratha",
+    "description": "Stuffed potato paratha with curd",
+    "price": "45.00",
+    "image": "menu/Gemini_Generated_Image_1uhnto1uhnto1uhn.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.046Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 25,
+  "fields": {
+    "category": 1,
+    "name": "Chole Bhature",
+    "description": "Spicy chickpeas with fluffy bhature",
+    "price": "60.00",
+    "image": "menu/Gemini_Generated_Image_c4bv5gc4bv5gc4bv.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.048Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 26,
+  "fields": {
+    "category": 1,
+    "name": "Medu Vada",
+    "description": "Crispy lentil vada with sambar & chutney",
+    "price": "25.00",
+    "image": "menu/Gemini_Generated_Image_3y0hrn3y0hrn3y0h.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.051Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 27,
+  "fields": {
+    "category": 1,
+    "name": "Pongal",
+    "description": "Creamy rice and lentil dish",
+    "price": "35.00",
+    "image": "menu/Gemini_Generated_Image_jyy2zdjyy2zdjyy2.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.054Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 28,
+  "fields": {
+    "category": 1,
+    "name": "Bread Omelette",
+    "description": "Toasted bread with masala omelette",
+    "price": "30.00",
+    "image": "menu/Gemini_Generated_Image_qk7umqqk7umqqk7u.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:47:01.056Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 29,
+  "fields": {
+    "category": 1,
+    "name": "Rava Dosa",
+    "description": "Crispy semolina crepe",
+    "price": "45.00",
+    "image": "menu/Gemini_Generated_Image_kl4mc1kl4mc1kl4m.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.058Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 30,
+  "fields": {
+    "category": 2,
+    "name": "Veg Thali",
+    "description": "Complete meal with dal, sabzi, roti, rice",
+    "price": "80.00",
+    "image": "menu/Gemini_Generated_Image_vhfd4wvhfd4wvhfd.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.061Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 31,
+  "fields": {
+    "category": 2,
+    "name": "Non-Veg Thali",
+    "description": "Thali with chicken curry, rice, roti",
+    "price": "120.00",
+    "image": "menu/Gemini_Generated_Image_z6gma5z6gma5z6gm.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:47:01.063Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 32,
+  "fields": {
+    "category": 2,
+    "name": "Paneer Butter Masala",
+    "description": "Creamy paneer in tomato gravy",
+    "price": "90.00",
+    "image": "menu/Gemini_Generated_Image_dzm07udzm07udzm0.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.065Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 33,
+  "fields": {
+    "category": 2,
+    "name": "Dal Fry Rice",
+    "description": "Yellow dal with steamed rice",
+    "price": "60.00",
+    "image": "menu/Gemini_Generated_Image_p4w1x2p4w1x2p4w1.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.068Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 34,
+  "fields": {
+    "category": 2,
+    "name": "Jeera Rice",
+    "description": "Cumin flavored basmati rice",
+    "price": "40.00",
+    "image": "menu/Gemini_Generated_Image_83rxjr83rxjr83rx.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.071Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 35,
+  "fields": {
+    "category": 2,
+    "name": "Roti (2 pcs)",
+    "description": "Soft wheat rotis",
+    "price": "20.00",
+    "image": "menu/Gemini_Generated_Image_dn9qfgdn9qfgdn9q.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.073Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 36,
+  "fields": {
+    "category": 2,
+    "name": "Curd Rice",
+    "description": "Cool yogurt rice with tempering",
+    "price": "35.00",
+    "image": "menu/Gemini_Generated_Image_ntjpqlntjpqlntjp.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.075Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 37,
+  "fields": {
+    "category": 2,
+    "name": "Lemon Rice",
+    "description": "Tangy lemon flavored rice",
+    "price": "40.00",
+    "image": "menu/Gemini_Generated_Image_s35xwms35xwms35x.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.077Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 38,
+  "fields": {
+    "category": 2,
+    "name": "Mutton Curry",
+    "description": "Spicy mutton curry",
+    "price": "140.00",
+    "image": "menu/Gemini_Generated_Image_h1kdbeh1kdbeh1kd.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:47:01.080Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 39,
+  "fields": {
+    "category": 2,
+    "name": "Fish Curry",
+    "description": "Traditional fish curry",
+    "price": "110.00",
+    "image": "menu/Gemini_Generated_Image_79utgl79utgl79ut.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-04T11:47:01.083Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 40,
+  "fields": {
+    "category": 4,
+    "name": "Lassi",
+    "description": "Sweet yogurt drink",
+    "price": "30.00",
+    "image": "menu/Gemini_Generated_Image_h2spnhh2spnhh2sp.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.085Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 41,
+  "fields": {
+    "category": 4,
+    "name": "Mango Shake",
+    "description": "Fresh mango milkshake",
+    "price": "50.00",
+    "image": "menu/Gemini_Generated_Image_91t11w91t11w91t1.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.087Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 42,
+  "fields": {
+    "category": 4,
+    "name": "Buttermilk",
+    "description": "Spiced buttermilk (Chaas)",
+    "price": "20.00",
+    "image": "menu/Gemini_Generated_Image_7pnzv77pnzv77pnz.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.090Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 43,
+  "fields": {
+    "category": 4,
+    "name": "Fresh Lime Soda",
+    "description": "Sweet or salted lime soda",
+    "price": "25.00",
+    "image": "menu/Gemini_Generated_Image_f9r7ngf9r7ngf9r7.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.093Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 44,
+  "fields": {
+    "category": 4,
+    "name": "Badam Milk",
+    "description": "Almond flavored milk",
+    "price": "40.00",
+    "image": "menu/Gemini_Generated_Image_9hywqz9hywqz9hyw_pTXkagO.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.095Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 45,
+  "fields": {
+    "category": 4,
+    "name": "Hot Chocolate",
+    "description": "Rich hot chocolate drink",
+    "price": "45.00",
+    "image": "menu/Gemini_Generated_Image_igs191igs191igs1.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.097Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 46,
+  "fields": {
+    "category": 4,
+    "name": "Masala Chai",
+    "description": "Spiced Indian tea",
+    "price": "15.00",
+    "image": "menu/Gemini_Generated_Image_9ugpcv9ugpcv9ugp.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.099Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 47,
+  "fields": {
+    "category": 4,
+    "name": "Green Tea",
+    "description": "Healthy green tea",
+    "price": "20.00",
+    "image": "menu/Gemini_Generated_Image_oweug8oweug8oweu.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.102Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 48,
+  "fields": {
+    "category": 4,
+    "name": "Fruit Juice",
+    "description": "Fresh seasonal fruit juice",
+    "price": "35.00",
+    "image": "menu/Gemini_Generated_Image_nyuttvnyuttvnyut.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.104Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 49,
+  "fields": {
+    "category": 5,
+    "name": "Rasgulla",
+    "description": "Soft cottage cheese balls in syrup",
+    "price": "30.00",
+    "image": "menu/Gemini_Generated_Image_3hpcl93hpcl93hpc.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.106Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 50,
+  "fields": {
+    "category": 5,
+    "name": "Rasmalai",
+    "description": "Creamy milk dessert",
+    "price": "40.00",
+    "image": "menu/Gemini_Generated_Image_6482n36482n36482.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.110Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 51,
+  "fields": {
+    "category": 5,
+    "name": "Kheer",
+    "description": "Rice pudding with nuts",
+    "price": "35.00",
+    "image": "menu/Gemini_Generated_Image_a3n8w6a3n8w6a3n8.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.113Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 52,
+  "fields": {
+    "category": 5,
+    "name": "Jalebi",
+    "description": "Crispy sweet spirals",
+    "price": "25.00",
+    "image": "menu/Gemini_Generated_Image_th9fzvth9fzvth9f.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.115Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 53,
+  "fields": {
+    "category": 5,
+    "name": "Ice Cream",
+    "description": "Choice of vanilla, chocolate, strawberry",
+    "price": "40.00",
+    "image": "menu/Gemini_Generated_Image_kfepnekfepnekfep.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.117Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 54,
+  "fields": {
+    "category": 5,
+    "name": "Brownie",
+    "description": "Chocolate brownie with ice cream",
+    "price": "45.00",
+    "image": "menu/Gemini_Generated_Image_th9fzvth9fzvth9f_1.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.119Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 55,
+  "fields": {
+    "category": 5,
+    "name": "Gajar Halwa",
+    "description": "Warm carrot pudding with nuts",
+    "price": "50.00",
+    "image": "menu/Gemini_Generated_Image_th9fzvth9fzvth9f_2.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.125Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 56,
+  "fields": {
+    "category": 5,
+    "name": "Kulfi",
+    "description": "Traditional Indian ice cream",
+    "price": "35.00",
+    "image": "menu/Gemini_Generated_Image_1acsrz1acsrz1acs.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-04T11:47:01.127Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 60,
+  "fields": {
+    "category": 3,
+    "name": "Cheese Burger",
+    "description": "Delicious burger with extra cheese and fresh veggies",
+    "price": "89.00",
+    "image": "menu/burger.png",
+    "preparation_time": 10,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-11T07:35:48.742Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 61,
+  "fields": {
+    "category": 3,
+    "name": "Veg Burger",
+    "description": "Classic vegetable patty burger with mayo",
+    "price": "69.00",
+    "image": "menu/Gemini_Generated_Image_st0c23st0c23st0c.png",
+    "preparation_time": 8,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-11T07:35:48.746Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 62,
+  "fields": {
+    "category": 3,
+    "name": "Margherita Pizza",
+    "description": "Classic pizza with tomato sauce and mozzarella cheese",
+    "price": "199.00",
+    "image": "menu/Margherita-Pizza.webp",
+    "preparation_time": 15,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-11T07:35:48.748Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 63,
+  "fields": {
+    "category": 3,
+    "name": "Veg Pizza",
+    "description": "Loaded with capsicum, onion, tomato and olives",
+    "price": "249.00",
+    "image": "menu/Gemini_Generated_Image_bp20z1bp20z1bp20_1.png",
+    "preparation_time": 15,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": true,
+    "created_at": "2026-02-11T07:35:48.750Z"
+  }
+},
+{
+  "model": "menu.menuitem",
+  "pk": 64,
+  "fields": {
+    "category": 3,
+    "name": "Chicken Burger",
+    "description": "Crispy chicken patty burger with spicy sauce",
+    "price": "129.00",
+    "image": "menu/Gemini_Generated_Image_r9wb6ur9wb6ur9wb.png",
+    "preparation_time": 12,
+    "is_available": true,
+    "is_todays_special": false,
+    "is_vegetarian": false,
+    "created_at": "2026-02-11T07:35:48.753Z"
+  }
+},
+{
+  "model": "menu.review",
+  "pk": 1,
+  "fields": {
+    "user": 12,
+    "menu_item": 24,
+    "rating": 4,
+    "comment": "",
+    "admin_response": "",
+    "created_at": "2026-02-17T17:26:43.842Z"
+  }
+},
+{
+  "model": "menu.review",
+  "pk": 2,
+  "fields": {
+    "user": 12,
+    "menu_item": 28,
+    "rating": 4,
+    "comment": "very tasty,make it bigger currently it small",
+    "admin_response": "thank for feed back",
+    "created_at": "2026-02-19T14:08:22.022Z"
+  }
+},
+{
+  "model": "menu.review",
+  "pk": 3,
+  "fields": {
+    "user": 12,
+    "menu_item": 1,
+    "rating": 4,
+    "comment": "the masala dosa is very very small that not that much worthy for giving money",
+    "admin_response": "thamk for feedback we will take action for it",
+    "created_at": "2026-02-19T14:13:19.504Z"
+  }
+},
+{
+  "model": "menu.favorite",
+  "pk": 1,
+  "fields": {
+    "user": 31,
+    "menu_item": 28,
+    "created_at": "2026-02-22T15:04:09.182Z"
+  }
+}
+]

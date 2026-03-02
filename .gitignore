@@ -28,8 +28,7 @@ chatbot_test_output.txt
 data_backup*.json
 verification.*
 
-# Media uploads
-media/
+# Media uploads (included in repo for Render free tier)
 
 # Static collected
 staticfiles/

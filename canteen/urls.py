@@ -17,7 +17,9 @@ urlpatterns = [
     path('offline/', TemplateView.as_view(template_name="offline.html"), name='offline'),
 ]
 
-# Serve media files in development
+# Serve media files (always, for Render free tier)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Serve static files in development
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])

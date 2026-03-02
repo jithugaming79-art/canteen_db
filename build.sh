@@ -11,10 +11,13 @@ python manage.py collectstatic --no-input
 # Run database migrations
 python manage.py migrate
 
-# Load menu data if fixture exists
-if [ -f fixtures/menu_data.json ]; then
-    python manage.py loaddata fixtures/menu_data.json || echo "Menu data already loaded or error"
-fi
+# Load menu data
+echo "Loading menu data..."
+python manage.py loaddata fixtures/menu_data.json --verbosity 2 || true
+echo "
+from menu.models import MenuItem, Category
+print(f'Categories: {Category.objects.count()}, MenuItems: {MenuItem.objects.count()}')
+" | python manage.py shell
 
 # Create superuser if it doesn't exist, and set admin role
 echo "

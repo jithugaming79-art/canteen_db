@@ -11,8 +11,25 @@ python manage.py collectstatic --no-input
 # Run database migrations
 python manage.py migrate
 
-# Create superuser if it doesn't exist
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@campusbites.com', 'admin123')" | python manage.py shell
+# Create superuser if it doesn't exist, and set admin role
+echo "
+from django.contrib.auth import get_user_model
+User = get_user_model()
+if not User.objects.filter(username='admin').exists():
+    u = User.objects.create_superuser('admin', 'admin@campusbites.com', 'admin123')
+    u.profile.role = 'admin'
+    u.profile.full_name = 'Admin'
+    u.profile.save()
+    print('Admin user created')
+else:
+    u = User.objects.get(username='admin')
+    if u.profile.role != 'admin':
+        u.profile.role = 'admin'
+        u.profile.save()
+        print('Admin role updated')
+    else:
+        print('Admin user already exists')
+" | python manage.py shell
 
 # Create kitchen staff user if it doesn't exist
 echo "

@@ -58,5 +58,21 @@ else:
     print('Kitchen user ready')
 " | python manage.py shell
 
+# Create student user ashwajith
+echo "
+from django.contrib.auth import get_user_model
+from allauth.account.models import EmailAddress
+User = get_user_model()
+if not User.objects.filter(username='ashwajith').exists():
+    u = User.objects.create_user('ashwajith', 'ashwajith@campusbites.com', 'jithu123')
+    u.profile.role = 'student'
+    u.profile.full_name = 'Ashwajith'
+    u.profile.save()
+    EmailAddress.objects.get_or_create(user=u, email='ashwajith@campusbites.com', defaults={'verified': True, 'primary': True})
+    print('Student user ashwajith created')
+else:
+    print('User ashwajith already exists')
+" | python manage.py shell
+
 # Reset login lockouts (django-axes)
 python manage.py axes_reset

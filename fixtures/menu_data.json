@@ -1034,50 +1034,5 @@
     "is_vegetarian": false,
     "created_at": "2026-02-11T07:35:48.753Z"
   }
-},
-{
-  "model": "menu.review",
-  "pk": 1,
-  "fields": {
-    "user": 12,
-    "menu_item": 24,
-    "rating": 4,
-    "comment": "",
-    "admin_response": "",
-    "created_at": "2026-02-17T17:26:43.842Z"
-  }
-},
-{
-  "model": "menu.review",
-  "pk": 2,
-  "fields": {
-    "user": 12,
-    "menu_item": 28,
-    "rating": 4,
-    "comment": "very tasty,make it bigger currently it small",
-    "admin_response": "thank for feed back",
-    "created_at": "2026-02-19T14:08:22.022Z"
-  }
-},
-{
-  "model": "menu.review",
-  "pk": 3,
-  "fields": {
-    "user": 12,
-    "menu_item": 1,
-    "rating": 4,
-    "comment": "the masala dosa is very very small that not that much worthy for giving money",
-    "admin_response": "thamk for feedback we will take action for it",
-    "created_at": "2026-02-19T14:13:19.504Z"
-  }
-},
-{
-  "model": "menu.favorite",
-  "pk": 1,
-  "fields": {
-    "user": 31,
-    "menu_item": 28,
-    "created_at": "2026-02-22T15:04:09.182Z"
-  }
 }
 ]

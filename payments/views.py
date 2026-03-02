@@ -295,9 +295,10 @@ def process_online_payment(request, order_id):
 
     except stripe.error.StripeError as e:
         logger.error(f'Stripe error creating session for order {order.id}: {e}')
+        error_msg = str(e)
         if is_ajax:
-            return JsonResponse({'error': 'Unable to connect to payment gateway. Please try again.'}, status=502)
-        messages.error(request, 'Unable to connect to payment gateway. Please try again.')
+            return JsonResponse({'error': f'Payment gateway error: {error_msg}'}, status=502)
+        messages.error(request, f'Payment gateway error: {error_msg}')
         return redirect('payment_page', order_id=order_id)
 
 

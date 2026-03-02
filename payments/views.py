@@ -79,9 +79,12 @@ def process_cash_payment(request, order_id):
     order.transition_to('pending')
     order.save()
 
-    # Send confirmation email after payment
-    from orders.utils import send_order_confirmation_email
-    send_order_confirmation_email(order)
+    # Send confirmation email after payment (fail silently)
+    try:
+        from orders.utils import send_order_confirmation_email
+        send_order_confirmation_email(order)
+    except Exception:
+        pass
 
     messages.success(request, 'Order confirmed! Pay at counter.')
     return redirect('order_history')
@@ -130,9 +133,12 @@ def process_wallet_payment(request, order_id):
     order.transition_to('confirmed')
     order.save()
 
-    # Send confirmation email after payment
-    from orders.utils import send_order_confirmation_email
-    send_order_confirmation_email(order)
+    # Send confirmation email after payment (fail silently)
+    try:
+        from orders.utils import send_order_confirmation_email
+        send_order_confirmation_email(order)
+    except Exception:
+        pass
 
     messages.success(request, '✓ Payment successful!')
     return redirect('order_history')
@@ -344,9 +350,12 @@ def stripe_success(request, order_id):
             order.transition_to('confirmed')
             order.save()
 
-            # Send confirmation email after payment
-            from orders.utils import send_order_confirmation_email
-            send_order_confirmation_email(order)
+            # Send confirmation email after payment (fail silently)
+            try:
+                from orders.utils import send_order_confirmation_email
+                send_order_confirmation_email(order)
+            except Exception:
+                pass
 
             messages.success(request, f'✓ Payment successful! Transaction ID: {session.payment_intent or session.id}')
             return redirect('order_history')

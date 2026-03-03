@@ -311,75 +311,82 @@ def process_online_payment(request, order_id):
 @login_required
 def stripe_success(request, order_id):
     """Handle return from Stripe after successful payment."""
-    logger.info(f'stripe_success called for order_id={order_id}, user={request.user.username}')
-    order = get_object_or_404(Order, id=order_id, user=request.user)
-
-    if order.is_paid:
-        logger.info(f'Order {order_id} already paid, redirecting')
-        messages.info(request, 'Order already paid')
-        return redirect('order_history')
-
-    session_id = request.GET.get('session_id')
-    if not session_id:
-        logger.warning(f'No session_id in request for order {order_id}')
-        messages.error(request, 'Invalid payment session')
-        return redirect('payment_page', order_id=order_id)
-
-    logger.info(f'Retrieving Stripe session {session_id} for order {order_id}')
-
     try:
-        session = stripe.checkout.Session.retrieve(session_id)
-        logger.info(f'Stripe session retrieved: payment_status={session.payment_status}, id={session.id}')
+        logger.info(f'stripe_success called for order_id={order_id}, user={request.user.username}')
+        order = get_object_or_404(Order, id=order_id, user=request.user)
 
-        if session.payment_status == 'paid':
-            # Create payment record and update order atomically
-            logger.info(f'Payment confirmed, creating Payment record for order {order_id}')
-            with transaction.atomic():
-                payment, created = Payment.objects.get_or_create(
-                    stripe_session_id=session.id,
-                    defaults={
-                        'order': order,
-                        'amount': order.total_amount,
-                        'method': 'stripe',
-                        'status': 'completed',
-                        'transaction_id': session.payment_intent or session.id,
-                        'ip_address': _get_client_ip(request),
-                        'gateway_response': {
-                            'gateway': 'stripe',
-                            'session_id': session.id,
-                            'payment_intent': session.payment_intent,
-                            'payment_status': session.payment_status,
-                        }
-                    }
-                )
-                logger.info(f'Payment record: id={payment.id}, created={created}')
-
-                if not order.is_paid:
-                    order.is_paid = True
-                    transitioned = order.transition_to('confirmed')
-                    order.save()
-                    logger.info(f'Order {order_id} updated: is_paid=True, transition_to_confirmed={transitioned}, status={order.status}')
-
-            # Send confirmation email after payment (fail silently)
-            try:
-                from orders.utils import send_order_confirmation_email
-                send_order_confirmation_email(order)
-            except Exception as email_err:
-                logger.warning(f'Email send failed for order {order_id}: {email_err}')
-
-            messages.success(request, f'✓ Payment successful! Transaction ID: {session.payment_intent or session.id}')
+        if order.is_paid:
+            logger.info(f'Order {order_id} already paid, redirecting')
+            messages.info(request, 'Order already paid')
             return redirect('order_history')
-        else:
-            logger.warning(f'Payment not yet confirmed for order {order_id}: status={session.payment_status}')
-            messages.warning(request, 'Payment not yet confirmed. Please try again.')
+
+        session_id = request.GET.get('session_id')
+        if not session_id:
+            logger.warning(f'No session_id in request for order {order_id}')
+            messages.error(request, 'Invalid payment session')
             return redirect('payment_page', order_id=order_id)
 
-    except stripe.error.StripeError as e:
-        logger.error(f'Stripe error verifying session {session_id}: {e}')
-        messages.error(request, 'Payment verification failed. Please contact support.')
-        return redirect('payment_page', order_id=order_id)
+        logger.info(f'Retrieving Stripe session {session_id} for order {order_id}')
+
+        try:
+            session = stripe.checkout.Session.retrieve(session_id)
+            logger.info(f'Stripe session retrieved: payment_status={session.payment_status}, id={session.id}')
+
+            if session.payment_status == 'paid':
+                # Ensure all values are plain strings for JSON serialization
+                payment_intent_id = str(session.payment_intent) if session.payment_intent else session.id
+                session_id_str = str(session.id)
+                payment_status_str = str(session.payment_status)
+
+                logger.info(f'Payment confirmed, creating Payment record for order {order_id}')
+                with transaction.atomic():
+                    payment, created = Payment.objects.get_or_create(
+                        stripe_session_id=session_id_str,
+                        defaults={
+                            'order': order,
+                            'amount': order.total_amount,
+                            'method': 'stripe',
+                            'status': 'completed',
+                            'transaction_id': payment_intent_id,
+                            'ip_address': _get_client_ip(request),
+                            'gateway_response': {
+                                'gateway': 'stripe',
+                                'session_id': session_id_str,
+                                'payment_intent': payment_intent_id,
+                                'payment_status': payment_status_str,
+                            }
+                        }
+                    )
+                    logger.info(f'Payment record: id={payment.id}, created={created}')
+
+                    if not order.is_paid:
+                        order.is_paid = True
+                        order.payment_method = 'online'
+                        transitioned = order.transition_to('confirmed')
+                        order.save()
+                        logger.info(f'Order {order_id} updated: is_paid=True, transition_to_confirmed={transitioned}, status={order.status}')
+
+                # Send confirmation email after payment (fail silently)
+                try:
+                    from orders.utils import send_order_confirmation_email
+                    send_order_confirmation_email(order)
+                except Exception as email_err:
+                    logger.warning(f'Email send failed for order {order_id}: {email_err}')
+
+                messages.success(request, f'✓ Payment successful! Transaction ID: {payment_intent_id}')
+                return redirect('order_history')
+            else:
+                logger.warning(f'Payment not yet confirmed for order {order_id}: status={session.payment_status}')
+                messages.warning(request, 'Payment not yet confirmed. Please try again.')
+                return redirect('payment_page', order_id=order_id)
+
+        except stripe.error.StripeError as e:
+            logger.error(f'Stripe error verifying session {session_id}: {e}')
+            messages.error(request, 'Payment verification failed. Please contact support.')
+            return redirect('payment_page', order_id=order_id)
+
     except Exception as e:
-        logger.error(f'Unexpected error in stripe_success for order {order_id}, session {session_id}: {e}', exc_info=True)
+        logger.error(f'Unexpected error in stripe_success for order {order_id}: {e}', exc_info=True)
         messages.error(request, 'Something went wrong processing your payment. Please check your order history or contact support.')
         return redirect('order_history')
 
@@ -416,29 +423,35 @@ def stripe_webhook(request):
 
         if order_id:
             try:
+                # Ensure all values are plain strings for JSON serialization
+                session_id_str = str(session.get('id', ''))
+                payment_intent_str = str(session.get('payment_intent', '')) or session_id_str
+                event_id_str = str(event.get('id', ''))
+
                 with transaction.atomic():
                     order = Order.objects.select_for_update().get(id=int(order_id))
 
                     # Idempotent — skip if already paid
                     payment, created = Payment.objects.get_or_create(
-                        stripe_session_id=session['id'],
+                        stripe_session_id=session_id_str,
                         defaults={
                             'order': order,
                             'amount': order.total_amount,
                             'method': 'stripe',
                             'status': 'completed',
-                            'transaction_id': session.get('payment_intent', session['id']),
+                            'transaction_id': payment_intent_str,
                             'gateway_response': {
                                 'gateway': 'stripe_webhook',
-                                'session_id': session['id'],
-                                'payment_intent': session.get('payment_intent'),
-                                'event_id': event['id'],
+                                'session_id': session_id_str,
+                                'payment_intent': payment_intent_str,
+                                'event_id': event_id_str,
                             }
                         }
                     )
                     
                     if created or not order.is_paid:
                         order.is_paid = True
+                        order.payment_method = 'online'
                         order.transition_to('confirmed')
                         order.save()
                         logger.info(f'Stripe webhook: order {order_id} confirmed via webhook')

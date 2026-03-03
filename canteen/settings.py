@@ -148,6 +148,7 @@ LOGGING = {
     'loggers': {
         'orders': {'level': 'INFO'},
         'menu': {'level': 'INFO'},
+        'payments': {'level': 'DEBUG', 'handlers': ['console'], 'propagate': False},
     },
 }
 

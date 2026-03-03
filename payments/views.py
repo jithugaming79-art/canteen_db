@@ -311,22 +311,29 @@ def process_online_payment(request, order_id):
 @login_required
 def stripe_success(request, order_id):
     """Handle return from Stripe after successful payment."""
+    logger.info(f'stripe_success called for order_id={order_id}, user={request.user.username}')
     order = get_object_or_404(Order, id=order_id, user=request.user)
 
     if order.is_paid:
+        logger.info(f'Order {order_id} already paid, redirecting')
         messages.info(request, 'Order already paid')
         return redirect('order_history')
 
     session_id = request.GET.get('session_id')
     if not session_id:
+        logger.warning(f'No session_id in request for order {order_id}')
         messages.error(request, 'Invalid payment session')
         return redirect('payment_page', order_id=order_id)
 
+    logger.info(f'Retrieving Stripe session {session_id} for order {order_id}')
+
     try:
         session = stripe.checkout.Session.retrieve(session_id)
+        logger.info(f'Stripe session retrieved: payment_status={session.payment_status}, id={session.id}')
 
         if session.payment_status == 'paid':
             # Create payment record and update order atomically
+            logger.info(f'Payment confirmed, creating Payment record for order {order_id}')
             with transaction.atomic():
                 payment, created = Payment.objects.get_or_create(
                     stripe_session_id=session.id,
@@ -345,22 +352,25 @@ def stripe_success(request, order_id):
                         }
                     }
                 )
+                logger.info(f'Payment record: id={payment.id}, created={created}')
 
                 if not order.is_paid:
                     order.is_paid = True
-                    order.transition_to('confirmed')
+                    transitioned = order.transition_to('confirmed')
                     order.save()
+                    logger.info(f'Order {order_id} updated: is_paid=True, transition_to_confirmed={transitioned}, status={order.status}')
 
             # Send confirmation email after payment (fail silently)
             try:
                 from orders.utils import send_order_confirmation_email
                 send_order_confirmation_email(order)
-            except Exception:
-                pass
+            except Exception as email_err:
+                logger.warning(f'Email send failed for order {order_id}: {email_err}')
 
             messages.success(request, f'✓ Payment successful! Transaction ID: {session.payment_intent or session.id}')
             return redirect('order_history')
         else:
+            logger.warning(f'Payment not yet confirmed for order {order_id}: status={session.payment_status}')
             messages.warning(request, 'Payment not yet confirmed. Please try again.')
             return redirect('payment_page', order_id=order_id)
 

@@ -658,3 +658,212 @@ input:checked+.toggle-slider:before {
         grid-template-columns: 1fr;
     }
 }
+
+/* ═══════════════════════════════════════
+   QR SCANNER
+   ═══════════════════════════════════════ */
+.scanner-container {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.scanner-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: var(--kds-shadow-lg);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.scanner-viewport {
+    width: 100%;
+    min-height: 320px;
+    background: #0f172a;
+    position: relative;
+}
+
+.scanner-viewport video {
+    border-radius: 0 !important;
+}
+
+#qr-reader {
+    border: none !important;
+}
+
+#qr-reader img[alt="Info icon"] {
+    display: none !important;
+}
+
+#qr-reader__scan_region {
+    min-height: 280px !important;
+}
+
+#qr-reader__dashboard {
+    padding: 10px !important;
+}
+
+#qr-reader__dashboard button {
+    padding: 10px 20px !important;
+    background: var(--kds-ready) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    cursor: pointer !important;
+    margin: 4px !important;
+}
+
+.scanner-instructions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 20px;
+    background: #f8fafc;
+    color: var(--admin-text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.scanner-manual {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: var(--kds-shadow-sm);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 20px;
+}
+
+/* ─── Scan Result Modal ─── */
+.scan-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: scanModalFadeIn 0.25s ease;
+}
+
+@keyframes scanModalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.scan-modal {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px 36px 32px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    animation: scanModalSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scanModalSlideIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.scan-modal-icon {
+    margin-bottom: 16px;
+}
+
+.scan-icon-success svg {
+    animation: scanCheckBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scanCheckBounce {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.scan-modal-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.scan-title-success { color: #00b894; }
+.scan-title-warning { color: #f39c12; }
+.scan-title-error { color: #e74c3c; }
+
+.scan-modal-msg {
+    font-size: 14px;
+    color: var(--admin-text-muted);
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.scan-modal-details {
+    margin-bottom: 20px;
+}
+
+.scan-order-info {
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 16px 20px;
+    text-align: left;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.scan-order-token {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--admin-text);
+    margin-bottom: 8px;
+}
+
+.scan-order-customer {
+    font-size: 13px;
+    color: var(--admin-text-muted);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.scan-order-items {
+    font-size: 13px;
+    color: var(--admin-text);
+    font-weight: 500;
+    padding: 8px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    margin-bottom: 8px;
+    line-height: 1.8;
+}
+
+.scan-order-total {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--admin-text);
+}
+
+.scan-modal-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--admin-text);
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.scan-modal-btn:hover {
+    background: #1a1a2e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

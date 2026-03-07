@@ -18,6 +18,7 @@ urlpatterns = [
     path('home/', views.home_view, name='home'),
     path('staff/dashboard/', RedirectView.as_view(pattern_name='custom_admin_overview'), name='admin_dashboard'),
     path('kitchen/', views.kitchen_dashboard, name='kitchen_dashboard'),
+    path('kitchen/scan-collect/', views.scan_qr_collect, name='scan_qr_collect'),
     path('kitchen/sales-summary/', views.kitchen_sales_summary, name='kitchen_sales_summary'),
 
     # New Admin Panel

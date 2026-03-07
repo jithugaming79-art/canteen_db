@@ -660,6 +660,70 @@ def kitchen_dashboard(request):
 
 
 @login_required
+def scan_qr_collect(request):
+    """API endpoint for kitchen staff to scan QR and mark order as collected"""
+    if request.user.profile.role not in ['kitchen', 'admin']:
+        return JsonResponse({'status': 'error', 'message': 'Access denied'}, status=403)
+
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': 'POST required'}, status=405)
+
+    try:
+        data = json.loads(request.body)
+        token = data.get('token_number', '').strip()
+    except (json.JSONDecodeError, AttributeError):
+        return JsonResponse({'status': 'error', 'message': 'Invalid request data'}, status=400)
+
+    if not token:
+        return JsonResponse({'status': 'error', 'message': 'No token provided'}, status=400)
+
+    try:
+        order = Order.objects.select_related('user').prefetch_related('items').get(token_number=token)
+    except Order.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': f'Order {token} not found'}, status=404)
+
+    if order.status == 'collected':
+        return JsonResponse({
+            'status': 'already',
+            'message': f'Order {token} was already collected',
+            'order': {
+                'token': order.token_number,
+                'customer': order.user.username,
+                'total': str(order.total_amount),
+            }
+        })
+
+    # Allow collection from any active status
+    active_statuses = ['confirmed', 'preparing', 'ready']
+    if order.status not in active_statuses:
+        return JsonResponse({
+            'status': 'error',
+            'message': f'Order {token} is currently "{order.get_status_display()}" and cannot be collected.'
+        }, status=400)
+
+    # Mark as collected
+    order.status = 'collected'
+    order.is_paid = True
+    order.save()
+
+    items_list = [
+        {'name': item.item_name, 'qty': item.quantity, 'price': str(item.price)}
+        for item in order.items.all()
+    ]
+
+    return JsonResponse({
+        'status': 'success',
+        'message': f'Order {token} marked as Collected!',
+        'order': {
+            'token': order.token_number,
+            'customer': order.user.username,
+            'total': str(order.total_amount),
+            'items': items_list,
+        }
+    })
+
+
+@login_required
 def kitchen_sales_summary(request):
     """JSON API for kitchen sales analytics with date range filter"""
     if request.user.profile.role not in ['kitchen', 'admin']:

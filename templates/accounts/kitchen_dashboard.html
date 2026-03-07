@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kitchen — Campus Bites</title>
     <link rel="stylesheet" href="{% static 'css/admin.css' %}?v=6.1">
-    <link rel="stylesheet" href="{% static 'css/kitchen.css' %}?v=7.1">
+    <link rel="stylesheet" href="{% static 'css/kitchen.css' %}?v=8.0">
     <style>
         @keyframes livePulse {
 
@@ -184,6 +184,19 @@
                         </svg>
                     </span>
                     Menu Items
+                </a>
+
+                <a href="#" class="sidebar-nav-item" id="sideScanner" onclick="switchView('scanner'); return false;">
+                    <span class="sidebar-nav-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+                            <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+                            <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+                            <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+                            <line x1="7" y1="12" x2="17" y2="12" />
+                        </svg>
+                    </span>
+                    QR Scanner
                 </a>
             </nav>
 
@@ -391,6 +404,52 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- QR SCANNER VIEW -->
+                <div id="panelScanner" style="display:none;">
+                    <div class="kds-page-header">
+                        <div>
+                            <div class="kds-page-title">QR Scanner</div>
+                            <div style="font-size:13px; color:var(--admin-text-muted); margin-top:4px;">Scan order QR code to mark as Collected</div>
+                        </div>
+                    </div>
+
+                    <!-- Hidden CSRF form for scanner API calls -->
+                    <form id="scannerCsrfForm" style="display:none;">{% csrf_token %}</form>
+
+                    <div class="scanner-container">
+                        <div class="scanner-card">
+                            <div id="qr-reader" class="scanner-viewport"></div>
+                            <div class="scanner-instructions">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                                    <path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                                </svg>
+                                Point the camera at the customer's order QR code
+                            </div>
+                        </div>
+
+                        <!-- Manual Token Input -->
+                        <div class="scanner-manual">
+                            <div style="font-size:13px; font-weight:700; color:var(--admin-text); margin-bottom:10px;">Or enter token manually</div>
+                            <div style="display:flex; gap:10px;">
+                                <input type="text" id="manualToken" placeholder="e.g. TKN-ABC123" style="flex:1; padding:12px 16px; border:1px solid rgba(0,0,0,0.1); border-radius:10px; font-size:14px; font-weight:600; background:#f8fafc; outline:none; text-transform:uppercase;" />
+                                <button onclick="submitManualToken()" style="padding:12px 24px; background:#00b894; color:#fff; border:none; border-radius:10px; font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:1px; cursor:pointer;">Collect</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scan Result Modal -->
+                    <div id="scanResultModal" class="scan-modal-overlay" style="display:none;">
+                        <div class="scan-modal">
+                            <div id="scanResultIcon" class="scan-modal-icon"></div>
+                            <div id="scanResultTitle" class="scan-modal-title"></div>
+                            <div id="scanResultMsg" class="scan-modal-msg"></div>
+                            <div id="scanResultDetails" class="scan-modal-details"></div>
+                            <button onclick="closeScanModal()" class="scan-modal-btn">Continue Scanning</button>
+                        </div>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
@@ -410,9 +469,19 @@
         function switchView(v) {
             document.getElementById('sideOrders').classList.toggle('active', v === 'orders');
             document.getElementById('sideMenu').classList.toggle('active', v === 'menu');
+            document.getElementById('sideScanner').classList.toggle('active', v === 'scanner');
             document.getElementById('panelOrders').style.display = v === 'orders' ? 'block' : 'none';
             document.getElementById('panelMenu').style.display = v === 'menu' ? 'block' : 'none';
-            document.getElementById('activeBreadcrumb').textContent = v === 'orders' ? 'Orders' : 'Menu Items';
+            document.getElementById('panelScanner').style.display = v === 'scanner' ? 'block' : 'none';
+            var labels = { orders: 'Orders', menu: 'Menu Items', scanner: 'QR Scanner' };
+            document.getElementById('activeBreadcrumb').textContent = labels[v] || 'Orders';
+
+            // Start/stop scanner based on view
+            if (v === 'scanner') {
+                startScanner();
+            } else {
+                stopScanner();
+            }
         }
 
         // Filter Menu items
@@ -661,6 +730,173 @@
                 }
             }
         });
+    </script>
+
+    <!-- html5-qrcode library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script>
+        let html5QrCode = null;
+        let scannerRunning = false;
+
+        function startScanner() {
+            if (scannerRunning) return;
+            const readerEl = document.getElementById('qr-reader');
+            if (!readerEl) return;
+
+            html5QrCode = new Html5Qrcode('qr-reader');
+            html5QrCode.start(
+                { facingMode: 'environment' },
+                { fps: 10, qrbox: { width: 250, height: 250 } },
+                onScanSuccess,
+                () => { /* ignore scan errors */ }
+            ).then(() => {
+                scannerRunning = true;
+            }).catch(err => {
+                console.error('Camera error:', err);
+                readerEl.innerHTML = '<div style="padding:40px; text-align:center; color:#e74c3c; font-weight:600;">Camera access denied or not available.<br>Use the manual token input below.</div>';
+            });
+        }
+
+        function stopScanner() {
+            if (html5QrCode && scannerRunning) {
+                html5QrCode.stop().then(() => {
+                    scannerRunning = false;
+                    html5QrCode.clear();
+                }).catch(() => {
+                    scannerRunning = false;
+                });
+            }
+        }
+
+        let lastScannedToken = '';
+        let lastScanTime = 0;
+
+        function onScanSuccess(decodedText) {
+            // Debounce: prevent scanning same QR repeatedly
+            const now = Date.now();
+            if (decodedText === lastScannedToken && (now - lastScanTime) < 5000) return;
+            lastScannedToken = decodedText;
+            lastScanTime = now;
+
+            // Parse QR data: ORDER:TKN-XYZ123|USER:abc|TOTAL:100
+            let token = '';
+            if (decodedText.startsWith('ORDER:')) {
+                const parts = decodedText.split('|');
+                token = parts[0].replace('ORDER:', '').trim();
+            } else if (decodedText.startsWith('TKN-')) {
+                token = decodedText.trim();
+            } else {
+                showScanResult('error', 'Invalid QR Code', 'This QR code is not a valid order QR.', '');
+                return;
+            }
+
+            if (token) {
+                collectOrder(token);
+            }
+        }
+
+        function submitManualToken() {
+            const input = document.getElementById('manualToken');
+            const token = input.value.trim().toUpperCase();
+            if (!token) return;
+            collectOrder(token);
+            input.value = '';
+        }
+
+        // Allow Enter key in manual input
+        document.addEventListener('DOMContentLoaded', function() {
+            const inp = document.getElementById('manualToken');
+            if (inp) {
+                inp.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') { e.preventDefault(); submitManualToken(); }
+                });
+            }
+        });
+
+        // Helper: read CSRF token from cookie
+        function getCsrfCookie() {
+            const match = document.cookie.match(/csrftoken=([^;]+)/);
+            return match ? match[1] : '';
+        }
+
+        function collectOrder(token) {
+            // Try multiple sources for CSRF token
+            const csrfToken = document.querySelector('#scannerCsrfForm [name=csrfmiddlewaretoken]')?.value
+                || document.querySelector('[name=csrfmiddlewaretoken]')?.value
+                || getCsrfCookie()
+                || '{{ csrf_token }}';
+
+            fetch('{% url "scan_qr_collect" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({ token_number: token })
+            })
+            .then(r => {
+                if (!r.ok && r.status === 403) {
+                    throw new Error('CSRF verification failed (403). Please refresh the page and try again.');
+                }
+                return r.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    let details = '';
+                    if (data.order) {
+                        details = '<div class="scan-order-info">';
+                        details += '<div class="scan-order-token">' + data.order.token + '</div>';
+                        details += '<div class="scan-order-customer">Customer: ' + data.order.customer + '</div>';
+                        if (data.order.items) {
+                            details += '<div class="scan-order-items">';
+                            data.order.items.forEach(function(item) {
+                                details += '<div>' + item.qty + 'x ' + item.name + ' — ₹' + item.price + '</div>';
+                            });
+                            details += '</div>';
+                        }
+                        details += '<div class="scan-order-total">Total: ₹' + data.order.total + '</div>';
+                        details += '</div>';
+                    }
+                    showScanResult('success', 'Order Collected!', data.message, details);
+                    // Refresh the orders board
+                    fetchBoardData();
+                } else if (data.status === 'already') {
+                    showScanResult('warning', 'Already Collected', data.message, '');
+                } else {
+                    showScanResult('error', 'Cannot Collect', data.message, '');
+                }
+            })
+            .catch(err => {
+                console.error('Scanner error:', err);
+                showScanResult('error', 'Error', err.message || 'Could not reach the server. Please try again.', '');
+            });
+        }
+
+        function showScanResult(type, title, msg, detailsHtml) {
+            const modal = document.getElementById('scanResultModal');
+            const iconEl = document.getElementById('scanResultIcon');
+            const titleEl = document.getElementById('scanResultTitle');
+            const msgEl = document.getElementById('scanResultMsg');
+            const detailsEl = document.getElementById('scanResultDetails');
+
+            var icons = {
+                success: '<svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00b894" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+                warning: '<svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+                error: '<svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>'
+            };
+
+            iconEl.innerHTML = icons[type] || icons.error;
+            iconEl.className = 'scan-modal-icon scan-icon-' + type;
+            titleEl.textContent = title;
+            titleEl.className = 'scan-modal-title scan-title-' + type;
+            msgEl.textContent = msg;
+            detailsEl.innerHTML = detailsHtml;
+            modal.style.display = 'flex';
+        }
+
+        function closeScanModal() {
+            document.getElementById('scanResultModal').style.display = 'none';
+        }
     </script>
 </body>
 

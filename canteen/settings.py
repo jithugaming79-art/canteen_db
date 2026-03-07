@@ -332,6 +332,8 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     # Render handles SSL at the proxy level, so disable redirect to avoid loops
     SECURE_SSL_REDIRECT = not os.environ.get('RENDER', False)
+    # Tell Django it's behind an HTTPS proxy (critical for Render)
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 else:
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False

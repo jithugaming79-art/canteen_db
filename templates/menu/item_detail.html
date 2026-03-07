@@ -9,7 +9,7 @@
 
     <!-- Item Details Card -->
     <div class="card" style="overflow: hidden;">
-        <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem;">
+        <div class="item-detail-grid">
             <!-- Image Section -->
             <!-- Image Section -->
             <div class="item-image-container">
@@ -128,7 +128,7 @@
             </style>
 
             <!-- Details Section -->
-            <div style="padding: 2rem;">
+            <div class="item-detail-content" style="padding: 2rem;">
                 <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">{{ item.name }}</h1>
 
                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
@@ -151,13 +151,13 @@
                     {{ item.description|default:"A delicious item prepared with fresh ingredients." }}
                 </p>
 
-                <div id="total-price" data-unit-price="{{ item.price }}"
+                <div id="total-price" data-unit-price="{{ item.price }}" class="item-price-display"
                     style="font-size: 2rem; color: var(--primary); font-weight: 700; margin-bottom: 1.5rem;">
                     ₹{{ item.price }}
                 </div>
 
                 <!-- Add to Cart Form -->
-                <form action="{% url 'add_to_cart' item.id %}" method="post"
+                <form action="{% url 'add_to_cart' item.id %}" method="post" class="item-add-form"
                     style="display: flex; gap: 1rem; align-items: center;">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{% url 'item_detail' item.id %}">

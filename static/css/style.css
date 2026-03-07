@@ -4219,3 +4219,346 @@ body.dark-mode .item-subtitle {
         font-size: 22px;
     }
 }
+
+/* ============================================================
+   CARD BASE CLASS
+   Used across item_detail, order_detail, and other pages
+   ============================================================ */
+.card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+body.dark-mode .card {
+    background: #1e1e1e;
+    border-color: #333;
+}
+
+/* ============================================================
+   ITEM DETAIL PAGE — Mobile Responsive
+   ============================================================ */
+.item-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .item-detail-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+
+    .item-image-container {
+        height: 250px !important;
+        border-radius: 16px !important;
+    }
+
+    .item-detail-content {
+        padding: 1rem 0 !important;
+    }
+
+    .item-detail-content h1 {
+        font-size: 1.5rem !important;
+    }
+
+    .item-detail-content .item-price-display {
+        font-size: 1.5rem !important;
+    }
+
+    .item-add-form {
+        flex-direction: column !important;
+    }
+
+    .item-add-form .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .item-image-container {
+        height: 200px !important;
+    }
+}
+
+/* ============================================================
+   ORDER DETAIL PAGE — Mobile Responsive
+   ============================================================ */
+.order-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.delivery-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .order-info-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem;
+    }
+
+    .delivery-info-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem;
+    }
+
+    /* Status stepper - smaller on mobile */
+    .status-stepper {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        justify-content: flex-start !important;
+        gap: 0;
+    }
+
+    .status-stepper .step-icon {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 0.7rem;
+    }
+
+    .status-stepper .step-label {
+        font-size: 0.65rem !important;
+    }
+
+    .status-stepper .line {
+        width: 20px !important;
+        min-width: 20px;
+    }
+
+    /* Order header token */
+    .order-detail-header h1 {
+        font-size: 2rem !important;
+    }
+
+    .order-detail-header {
+        padding: 1.5rem !important;
+    }
+
+    .order-detail-body {
+        padding: 1.25rem !important;
+    }
+
+    .order-qr-section {
+        padding: 1rem !important;
+    }
+
+    .order-qr-section img {
+        width: 140px !important;
+        height: 140px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .status-stepper .line {
+        width: 14px !important;
+        min-width: 14px;
+    }
+
+    .status-stepper .step-icon {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    .status-stepper .step-label {
+        font-size: 0.6rem !important;
+    }
+}
+
+/* ============================================================
+   PROFILE PAGE — Mobile Responsive
+   ============================================================ */
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.profile-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 576px) {
+    .profile-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        /* Keep 2-col for stats, they're small */
+        gap: 8px;
+    }
+
+    .profile-form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0;
+    }
+
+    .auth-content {
+        padding: 24px 16px !important;
+    }
+
+    .page-title {
+        font-size: 1.8rem !important;
+    }
+
+    .quote-text {
+        font-size: 2rem !important;
+    }
+}
+
+/* ============================================================
+   MOBILE BOTTOM NAVIGATION BAR (Swiggy/Zomato Style)
+   Only visible on mobile for regular users
+   ============================================================ */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    padding: 6px 0;
+    padding-bottom: max(6px, env(safe-area-inset-bottom));
+    z-index: 1000;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.mobile-bottom-nav-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    text-decoration: none;
+    color: var(--grey);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.mobile-nav-item svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 1.8;
+    transition: all 0.2s ease;
+}
+
+.mobile-nav-item.active {
+    color: var(--primary);
+}
+
+.mobile-nav-item.active svg {
+    stroke-width: 2.2;
+}
+
+.mobile-nav-item .mobile-nav-badge {
+    position: absolute;
+    top: -2px;
+    right: 4px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    min-width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    line-height: 1;
+}
+
+/* Dark mode for bottom nav */
+body.dark-mode .mobile-bottom-nav {
+    background: #1a1a2e;
+    border-top-color: #2a2a3e;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .mobile-nav-item {
+    color: #a0a3b1;
+}
+
+body.dark-mode .mobile-nav-item.active {
+    color: var(--primary);
+}
+
+/* Show bottom nav only on mobile */
+@media (max-width: 768px) {
+    .mobile-bottom-nav {
+        display: block;
+    }
+
+    /* Add padding to body to prevent content from hiding behind bottom nav */
+    main {
+        padding-bottom: 70px;
+    }
+
+    /* Push footer up to account for bottom nav */
+    .footer {
+        margin-bottom: 60px;
+    }
+
+    /* Adjust chat FAB position when bottom nav is present */
+    .chat-fab-container {
+        bottom: 76px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .mobile-nav-item {
+        font-size: 9px;
+        padding: 4px 8px;
+    }
+
+    .mobile-nav-item svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* ============================================================
+   HOME PAGE — "How It Works" section mobile fix
+   ============================================================ */
+.how-it-works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+@media (max-width: 576px) {
+    .how-it-works-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .how-it-works-grid > div {
+        padding: 12px;
+    }
+
+    .how-it-works-grid .hiw-icon {
+        font-size: 36px !important;
+        margin-bottom: 8px !important;
+    }
+}

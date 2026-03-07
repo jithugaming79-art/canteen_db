@@ -33,8 +33,7 @@
             </div>
 
             <!-- Stats -->
-            <div class="animate-enter delay-2"
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px;">
+            <div class="animate-enter delay-2 profile-stats-grid" style="margin-bottom: 28px;">
                 <div style="background: #f9fafb; border-radius: 12px; padding: 16px; text-align: center;">
                     <div style="font-size: 24px; font-weight: 700; color: #fc8019;">{{ order_count }}</div>
                     <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">Total Orders</div>
@@ -55,7 +54,7 @@
                         value="{{ profile.full_name }}">
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="profile-form-grid">
                     <div class="form-group-modern">
                         <label class="modern-label">Email</label>
                         <input type="email" class="modern-input" value="{{ user.email }}" disabled
